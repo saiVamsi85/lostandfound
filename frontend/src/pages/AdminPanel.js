@@ -39,7 +39,7 @@ const AdminPanel = () => {
         const dynamicStyles = isLost ? styles.lost : styles.found;
 
         const imageUrl = item.image
-          ? `https://lostandfound-d9vp.onrender.com/${item.image.replace(/\\/g, "/")}`
+          ? `https://lostandfound-jsqb.onrender.com/${item.image.replace(/\\/g, "/")}`
           : "https://via.placeholder.com/100";
 
         return (

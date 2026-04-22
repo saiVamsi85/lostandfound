@@ -11,7 +11,7 @@ const ItemCard = ({ item }) => {
     item.user && item.user._id && item.user._id.toString() === userId;
 
   const imageUrl = item.image
-    ? `https://lostandfound-d9vp.onrender.com/${item.image.replace(/\\/g, "/")}`
+    ? `https://lostandfound-jsqb.onrender.com/${item.image.replace(/\\/g, "/")}`
     : "https://via.placeholder.com/100";
 
   const handleClaim = async () => {
