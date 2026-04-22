@@ -3,22 +3,37 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 const path = require("path");
+
 const app = express();
 
-// middleware
+// Middleware
 app.use(express.json());
-app.use(cors());
 
+// Dynamic CORS
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    credentials: true,
+  }),
+);
+
+// Static uploads (ONLY ONCE)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// routes
+// Routes
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/items", require("./routes/itemRoutes"));
-app.use("/uploads", express.static("uploads"));
 
+// DB connect + server start
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("DB Connected"))
-  .catch((err) => console.log(err));
+  .then(() => {
+    console.log("DB Connected");
 
-app.listen(5000, () => console.log("Server running on port 5000"));
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => console.log(`Server running on ${PORT}`));
+  })
+  .catch((err) => {
+    console.log("DB Error:", err);
+    process.exit(1); // stop app if DB fails
+  });
